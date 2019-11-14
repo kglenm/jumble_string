@@ -8,26 +8,22 @@ public class Main {
     public static String jumbledString(String string, long number) {
         final List<Character> arrayOfString = getCharacterList(string.toCharArray());
 
-        final StringBuilder evenString = new StringBuilder();
-        final StringBuilder oddString = new StringBuilder();
+        String evenString = "";
+        String oddString = "";
+        String tempOddString = null;
 
         for (Character text : arrayOfString) {
-            moveToLeftOrRight(arrayOfString, evenString, oddString, text);
+            if ((arrayOfString.indexOf(text) % 2) == 0) {
+                evenString = evenString + text; // even characters
+            } else {
+                oddString = oddString + text; // odd characters
+            }
         }
         for (int x = 0; x < number; x++) {
-            oddString.append(oddString);
+            tempOddString = tempOddString == null ? oddString : tempOddString;
+            oddString += tempOddString;
         }
-
-        final StringBuilder stringToPrint = evenString.append(oddString);
-        return String.valueOf(stringToPrint);
-    }
-
-    private static void moveToLeftOrRight(List<Character> arrayOfString, StringBuilder evenString, StringBuilder oddString, Character text) {
-        if ((arrayOfString.indexOf(text) % 2) == 0) {
-            evenString.append(text); // even characters
-        } else {
-            oddString.append(text); // odd characters
-        }
+        return evenString + oddString;
     }
 
     public static List<Character> getCharacterList(char[] chars) {
@@ -39,6 +35,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println(jumbledString("Wow Example!", 1));
+        System.out.println(jumbledString("Wow Example!", 1000000));
     }
 }
